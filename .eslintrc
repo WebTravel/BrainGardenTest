@@ -1,0 +1,46 @@
+{
+  "env": {
+    "browser": true,
+    "jest": true
+  },
+  "extends": ["airbnb", "prettier", "prettier/react"],
+  "plugins": ["prettier", "jest", "react-hooks"],
+  "parser": "babel-eslint",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "rules": {
+    "prettier/prettier": 2,
+    "no-plusplus": 0,
+    "import/no-named-default": 0,
+    "react/prop-types": 0,
+    "react/jsx-filename-extension": 0,
+    "import/no-unresolved": 0,
+    "import/extensions": 0,
+    "import/imports-first": 0,
+    "import/prefer-default-export": 0,
+    "jsx-a11y/label-has-for": 0,
+    "react/require-extension": 0,
+    "jest/no-disabled-tests": "warn",
+    "jest/no-focused-tests": "error",
+    "jest/no-identical-title": "error",
+    "jest/prefer-to-have-length": "warn",
+    "jest/valid-expect": "error",
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn"
+  },
+  "globals": {
+    "shallow": true,
+    "render": true,
+    "mount": true,
+    "toJson": true,
+    "create": true,
+    "generateUsers": true,
+    "testReduxReducer": true,
+    "testReducer": true,
+    "testCallMethod": true,
+    "testReduxSaga": true
+  }
+}

@@ -1,0 +1,3 @@
+{
+  "src/**/*.{js,json}": ["yarn prettify", "yarn eslint", "yarn stylelint", "git add"]
+}

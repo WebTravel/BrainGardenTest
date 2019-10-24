@@ -6,7 +6,7 @@
 * ```docker-compose up -d```
 
 ## Entrypoints
-* API doc: [http://localhost/](http://localhost/)
+* [http://localhost/](http://localhost/)
 
 
 ### Checking code style and running tests

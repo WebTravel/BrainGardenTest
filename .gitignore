@@ -1,0 +1,12 @@
+/.idea
+/.env
+/.cache/
+/.yarn/
+/node_modules/
+/coverage/
+/public/
+*.log
+
+# vscode extensions
+.vscode
+.history
