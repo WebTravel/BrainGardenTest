@@ -4,7 +4,6 @@ import { rootReducer } from './rootReducer';
 import { rootSaga } from './rootSaga';
 
 const { APP_ENV } = process.env;
-
 const sagaMiddleware = createSagaMiddleware();
 
 export const configureStore = (initState, history) => {

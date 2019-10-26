@@ -20,14 +20,7 @@ export const addHoverOpacity = `
   }
 `;
 
-export const focusedElement = `
-  &:focus:not(:active) {
-    outline-offset: 4px;
-    outline: ${theme.colors.steel} dashed 1px;
-  }
-`;
-
 export const grayCaption = `
   font-weight: ${theme.fonts.weight.medium};
-  color: ${theme.colors.steel};
+  color: ${theme.colors.black};
 `;

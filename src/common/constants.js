@@ -2,4 +2,5 @@
 
 export const ROUTES = {
   HOME: '/',
+  IMAGE: '/image/:name',
 };

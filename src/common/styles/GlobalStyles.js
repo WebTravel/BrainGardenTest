@@ -15,7 +15,7 @@ export const GlobalStyle = createGlobalStyle`
     width: 100%;
     overflow-y: scroll;
     font-family: ${({ theme }) => theme.fonts.family.default};
-    letter-spacing: 0.5px;
+    font-size: ${({ theme }) => theme.fonts.size.default};
   }
 
   #app {

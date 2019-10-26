@@ -1,5 +1,6 @@
 import React from 'react';
+import { Gallery } from '@features/Gallery';
 
-const HomePage = () => <div>HomePage</div>;
+const HomePage = () => <Gallery />;
 
 export default HomePage;
