@@ -40,10 +40,9 @@ export const ImageItem = ({ name }) => {
 
   const image = new Image();
   const loadImage = () => {
-    image.src = '/2.jpg';
-    image.setAttribute('crossOrigin', '');
     image.onerror = () => setIsErrorLoadImage(true);
     image.onload = () => setIsLoadImage(true);
+    image.src = imageUrl;
 
     return image;
   };
@@ -85,7 +84,7 @@ export const ImageItem = ({ name }) => {
     );
   }
 
-  if (error || isErrorLoadImage) {
+  if (error) {
     return (
       <Wrapper>
         <Error>Не удалось загрузить изображение</Error>

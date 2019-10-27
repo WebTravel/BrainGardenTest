@@ -1,9 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
 import { useEffectOnce } from 'react-use';
 import { useSelector, useDispatch } from 'react-redux';
-import { addHoverOpacity } from '@styles/placeholders';
 import { Loader } from '@components/UI/Loader';
 import { Error } from '@components/UI/Error';
 import { Content } from '@components/UI/Content';
@@ -13,6 +11,7 @@ import {
   imagesDataSelector,
 } from './selectors';
 import { getImagesStart } from './ducks';
+import { GalleryItem } from './components/GaleryItem';
 
 const Wrapper = styled.div`
   position: relative;
@@ -20,10 +19,6 @@ const Wrapper = styled.div`
   align-items: center;
   justify-content: center;
   min-height: 100px;
-`;
-
-const ImageLink = styled(Link)`
-  ${addHoverOpacity};
 `;
 
 export const Gallery = () => {
@@ -55,9 +50,7 @@ export const Gallery = () => {
   return (
     <Content.Grid template="repeat(auto-fill, minmax(200px, 1fr))" gap={60}>
       {images.map(({ url, name }) => (
-        <ImageLink key={name} to={`image/${name}`}>
-          <img src={url} alt={name} />
-        </ImageLink>
+        <GalleryItem key={name} url={url} name={name} />
       ))}
     </Content.Grid>
   );

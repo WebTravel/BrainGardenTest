@@ -78,7 +78,7 @@ export const Filters = ({
           color="primary"
           type="button"
           onClick={() => setSelectedColor('#000')}
-          disabled={selectedColor}
+          disabled={!!selectedColor}
         >
           Черно-белое
         </Button>
@@ -88,7 +88,7 @@ export const Filters = ({
             color="secondary"
             variant="contained"
             onClick={handleClickPickColor}
-            disabled={selectedColor}
+            disabled={!!selectedColor}
           >
             Выбрать цвет
           </Button>
@@ -105,6 +105,7 @@ export const Filters = ({
           type="button"
           variant="contained"
           onClick={handleClickResetButton}
+          disabled={selectedColor === null && opacity === INIT_OPACITY_VALUE}
         >
           Сбросить все настройки
         </Button>
@@ -112,7 +113,8 @@ export const Filters = ({
       <OpacityWrapper>
         <Content.SmallTitle>Прозрачность</Content.SmallTitle>
         <Slider
-          defaultValue={30}
+          defaultValue={opacity}
+          value={opacity}
           aria-labelledby="discrete-slider"
           valueLabelDisplay="auto"
           step={1}
