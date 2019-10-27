@@ -1,70 +1,127 @@
-import React, { useState } from 'react';
-import { useUpdateEffect } from 'react-use';
+import React, { useState, useRef } from 'react';
+import { useUpdateEffect, useClickAway } from 'react-use';
 import styled from 'styled-components';
-import { SketchPicker } from 'react-color';
+import { ChromePicker } from 'react-color';
+import Slider from '@material-ui/core/Slider';
+import Button from '@material-ui/core/Button';
+import { Content } from '@components/UI/Content';
 
-const Wrapper = styled.div`
-  display: flex;
-  align-items: center;
+const ColorPicker = styled.div`
+  position: relative;
 `;
+
+const ColorsPallet = styled.div`
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  z-index: 2;
+`;
+
+const OpacityWrapper = styled.div`
+  max-width: 600px;
+  margin-top: 15px;
+`;
+
+const INIT_OPACITY_VALUE = 100;
 
 export const Filters = ({
   ctx,
   resetImageSetting = Function.prototype,
   image,
 }) => {
-  const [withFilter, setWithFilter] = useState(false);
-  const [selectedColor, setSelectedColor] = useState(null);
   const [isVisibleColorPicker, setIsVisibleColorPicker] = useState(false);
+  const [opacity, setOpacity] = useState(INIT_OPACITY_VALUE);
+  const [selectedColor, setSelectedColor] = useState(null);
+  const colorPalletRef = useRef(null);
   const handleClickPickColor = () => {
     setIsVisibleColorPicker(!isVisibleColorPicker);
   };
-  const handleChangeImage = (color = '#000') => {
-    ctx.globalCompositeOperation = 'saturation';
+  const handleChangeImage = color => {
+    ctx.globalCompositeOperation = 'color';
     ctx.fillStyle = color;
     ctx.fillRect(0, 0, image.width, image.height);
-    ctx.globalCompositeOperation = 'source-over';
-
-    setWithFilter(true);
+    ctx.globalCompositeOperation = 'source-atop';
   };
 
   const handleClickResetButton = () => {
     resetImageSetting();
-    setWithFilter(false);
+    setIsVisibleColorPicker(false);
+    setSelectedColor(null);
+    setOpacity(INIT_OPACITY_VALUE);
+  };
+
+  const handleChangeColor = ({ rgb }) => {
+    setSelectedColor(`rgba(${Object.values(rgb).join(',')})`);
+  };
+
+  const handleOpacityChange = (_, value) => {
+    setOpacity(value);
   };
 
   useUpdateEffect(() => {
-    handleChangeImage(selectedColor);
-  }, [selectedColor]);
+    if (selectedColor) {
+      handleChangeImage(selectedColor);
+    }
+  }, [selectedColor, handleChangeImage]);
+
+  useUpdateEffect(() => {}, [opacity]);
+
+  useClickAway(colorPalletRef, () => {
+    setIsVisibleColorPicker(false);
+  });
 
   return (
     <>
-      <Wrapper>
-        <button type="button" onClick={handleChangeImage} disabled={withFilter}>
-          Черно-белое изображение
-        </button>
-        <button
+      <Content.Grid gap={20} template="repeat(3, minmax(120px, max-content))">
+        <Button
+          variant="contained"
+          color="primary"
           type="button"
-          onClick={() => {
-            ctx.globalAlpha = 0.5;
-          }}
+          onClick={() => setSelectedColor('#000')}
+          disabled={selectedColor}
         >
-          Сделать прозрачным
-        </button>
-        <button type="button" onClick={handleClickPickColor}>
-          Pick Color
-        </button>
-        <button type="button" onClick={handleClickResetButton}>
+          Черно-белое
+        </Button>
+        <ColorPicker ref={colorPalletRef}>
+          <Button
+            type="button"
+            color="secondary"
+            variant="contained"
+            onClick={handleClickPickColor}
+            disabled={selectedColor}
+          >
+            Выбрать цвет
+          </Button>
+          {isVisibleColorPicker && (
+            <ColorsPallet>
+              <ChromePicker
+                color={selectedColor || 'red'}
+                onChange={handleChangeColor}
+              />
+            </ColorsPallet>
+          )}
+        </ColorPicker>
+        <Button
+          type="button"
+          variant="contained"
+          onClick={handleClickResetButton}
+        >
           Сбросить все настройки
-        </button>
-      </Wrapper>
-      {isVisibleColorPicker && (
-        <SketchPicker
-          onChange={({ hex }) => {
-            setSelectedColor(hex);
-          }}
+        </Button>
+      </Content.Grid>
+      <OpacityWrapper>
+        <Content.SmallTitle>Прозрачность</Content.SmallTitle>
+        <Slider
+          defaultValue={30}
+          aria-labelledby="discrete-slider"
+          valueLabelDisplay="auto"
+          step={1}
+          marks
+          min={0}
+          max={100}
+          onChangeCommitted={handleOpacityChange}
         />
-      )}
+      </OpacityWrapper>
     </>
   );
 };

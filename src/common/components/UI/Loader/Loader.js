@@ -31,7 +31,7 @@ const Wrapper = styled.div`
 const Inner = styled.div`
   width: 100%;
   height: 100%;
-  background-color: ${({ theme }) => theme.colors.cloudyBlue};
+  background-color: ${({ theme }) => theme.colors.black};
   border-radius: 50%;
   clip-path: polygon(0 50%, 50% 0%, 100% 50%, 50% 100%);
   animation: ${cubeAnimation} 1s ease-in-out infinite;

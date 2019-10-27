@@ -67,7 +67,7 @@ export const ImageItem = ({ name }) => {
     }
   }, [isLoadImage, createImageInCanvas, ctx]);
 
-  useUpdateEffect(() => {
+  useEffect(() => {
     loadImage();
 
     return () => {
