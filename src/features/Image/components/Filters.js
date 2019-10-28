@@ -64,7 +64,9 @@ export const Filters = ({
     }
   }, [selectedColor, handleChangeImage]);
 
-  useUpdateEffect(() => {}, [opacity]);
+  useUpdateEffect(() => {
+    ctx.globalAlpha = opacity / 100;
+  }, [opacity]);
 
   useClickAway(colorPalletRef, () => {
     setIsVisibleColorPicker(false);
@@ -121,7 +123,7 @@ export const Filters = ({
           marks
           min={0}
           max={100}
-          onChangeCommitted={handleOpacityChange}
+          onChange={handleOpacityChange}
         />
       </OpacityWrapper>
     </>

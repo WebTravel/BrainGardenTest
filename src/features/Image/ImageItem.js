@@ -24,59 +24,42 @@ const Canvas = styled.canvas`
   margin-bottom: 20px;
 `;
 
+const image = new Image();
+
 export const ImageItem = ({ name }) => {
   const dispatch = useDispatch();
   const isLoading = useSelector(imageIsLoadingSelector);
   const error = useSelector(imageErrorSelector);
   const imageUrl = useSelector(imageDataSelector);
-  const [isErrorLoadImage, setIsErrorLoadImage] = useState(false);
-  const [isLoadImage, setIsLoadImage] = useState(false);
   const [ctx, setCtx] = useState(null);
+  const [isErrorLoadImage, setIsErrorLoadImage] = useState(false);
+  const [isImageLoaded, setIsImageLoaded] = useState(false);
   const canvasRef = useRef(null);
+  const setImageInCanvas = useCallback(() => {
+    ctx.drawImage(image, 0, 0, CanvasWidth, CanvasHeight);
+  }, [ctx]);
 
   useEffectOnce(() => {
     dispatch(getImageStart(name));
   });
 
-  const image = new Image();
-  const loadImage = () => {
+  useUpdateEffect(() => {
     image.onerror = () => setIsErrorLoadImage(true);
-    image.onload = () => setIsLoadImage(true);
+    image.onload = () => setIsImageLoaded(true);
     image.src = imageUrl;
+  }, [imageUrl]);
 
-    return image;
-  };
-  const createImageInCanvas = useCallback(() => {
+  useUpdateEffect(() => {
+    setCtx(canvasRef.current.getContext('2d'));
+  }, [isImageLoaded]);
+
+  useUpdateEffect(() => {
     ctx.canvas.width = CanvasWidth;
     ctx.canvas.height = CanvasHeight;
-    setTimeout(() => {
-      ctx.drawImage(image, 0, 0, CanvasWidth, CanvasHeight);
-    }, 0);
-  }, [ctx, image]);
+    setImageInCanvas();
+  }, [ctx]);
 
-  useEffect(() => {
-    if (canvasRef.current) {
-      setCtx(canvasRef.current.getContext('2d'));
-    }
-  });
-
-  useEffect(() => {
-    if (isLoadImage && ctx) {
-      createImageInCanvas();
-    }
-  }, [isLoadImage, createImageInCanvas, ctx]);
-
-  useEffect(() => {
-    loadImage();
-
-    return () => {
-      image.src = '';
-      image.onload = null;
-      image.onerror = null;
-    };
-  }, [image.onerror, image.onload, image.src, loadImage]);
-
-  if (isLoading || !isLoadImage) {
+  if (isLoading || !isImageLoaded) {
     return (
       <Wrapper>
         <Loader />
@@ -84,7 +67,7 @@ export const ImageItem = ({ name }) => {
     );
   }
 
-  if (error) {
+  if (error || isErrorLoadImage) {
     return (
       <Wrapper>
         <Error>Не удалось загрузить изображение</Error>
@@ -95,11 +78,7 @@ export const ImageItem = ({ name }) => {
   return (
     <Wrapper>
       <Canvas ref={canvasRef} />
-      <Filters
-        image={image}
-        ctx={ctx}
-        resetImageSetting={createImageInCanvas}
-      />
+      <Filters image={image} ctx={ctx} resetImageSetting={setImageInCanvas} />
     </Wrapper>
   );
 };
