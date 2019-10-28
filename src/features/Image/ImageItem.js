@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState, useCallback } from 'react';
+import React, { useRef, useState, useCallback } from 'react';
 import styled from 'styled-components';
 import { useEffectOnce, useUpdateEffect } from 'react-use';
 import { useSelector, useDispatch } from 'react-redux';

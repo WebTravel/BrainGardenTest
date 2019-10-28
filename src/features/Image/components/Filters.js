@@ -70,6 +70,11 @@ export const Filters = ({
     ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
     ctx.globalAlpha = opacity / 100;
     ctx.drawImage(image, 0, 0, ctx.canvas.width, ctx.canvas.height);
+
+    if (selectedColor) {
+      handleChangeImage(selectedColor);
+    }
+
     ctx.restore();
   }, [opacity]);
 
