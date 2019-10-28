@@ -12,8 +12,8 @@ const ColorPicker = styled.div`
 
 const ColorsPallet = styled.div`
   position: absolute;
-  bottom: 0;
   right: 0;
+  bottom: 0;
   z-index: 2;
 `;
 

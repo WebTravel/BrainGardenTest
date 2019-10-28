@@ -9,7 +9,7 @@ import { addHoverOpacity } from '@styles/placeholders';
 const ImageLink = styled(Link)`
   position: relative;
   display: block;
-  min-height: 250px;
+  min-height: 100px;
   ${addHoverOpacity};
 `;
 
