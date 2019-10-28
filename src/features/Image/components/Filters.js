@@ -65,7 +65,12 @@ export const Filters = ({
   }, [selectedColor, handleChangeImage]);
 
   useUpdateEffect(() => {
+    ctx.save();
+    ctx.fillStyle = '#fff';
+    ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
     ctx.globalAlpha = opacity / 100;
+    ctx.drawImage(image, 0, 0, ctx.canvas.width, ctx.canvas.height);
+    ctx.restore();
   }, [opacity]);
 
   useClickAway(colorPalletRef, () => {
