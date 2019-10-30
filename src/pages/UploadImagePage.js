@@ -1,15 +1,15 @@
 import React from 'react';
-import { Image } from '@features/Image';
+import { UploadImage } from '@features/UploadImage';
 import { Content } from '@components/UI/Content';
 import { BackLink } from '@components/UI/BackLink';
 import { ROUTES } from '@common/constants';
 
-const ImagePage = ({ match: { params } }) => (
+const UploadImagePage = () => (
   <Content.Container>
-    <Content.PageTitle>Редактирование</Content.PageTitle>
+    <Content.PageTitle>Загрузка изображения</Content.PageTitle>
     <BackLink to={ROUTES.HOME} />
-    <Image name={params.name} />
+    <UploadImage />
   </Content.Container>
 );
 
-export default ImagePage;
+export default UploadImagePage;
