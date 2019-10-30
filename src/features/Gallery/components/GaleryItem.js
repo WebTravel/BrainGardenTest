@@ -10,7 +10,14 @@ const ImageLink = styled(Link)`
   position: relative;
   display: block;
   min-height: 100px;
+  max-height: 120px;
+  overflow: hidden;
+  font-size: 0;
   ${addHoverOpacity};
+`;
+
+const ImageValue = styled.img`
+  object-fit: cover;
 `;
 
 const GalleryItemComponent = ({ name, url }) => {
@@ -33,7 +40,7 @@ const GalleryItemComponent = ({ name, url }) => {
 
   return (
     <ImageLink key={name} to={`image/${name}`}>
-      {isLoadImage ? <img src={url} alt={name} /> : <Loader />}
+      {isLoadImage ? <ImageValue src={url} alt={name} /> : <Loader />}
     </ImageLink>
   );
 };
