@@ -15,11 +15,6 @@ Fix code style by running ESLint:
 docker-compose exec node yarn eslint
 ```
 
-Run Unit Tests:
-```bash
-docker-compose exec node yarn test
-```
-
 Prettify code by running prettier:
 ```bash
 docker-compose exec node yarn prettify
