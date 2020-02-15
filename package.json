@@ -84,6 +84,6 @@
     "reselect": "^4.0.0",
     "style-loader": "^1.0.0",
     "styled-components": "^4.3.2",
-    "yarn": "^1.19.1"
+    "yarn": "^1.22.0"
   }
 }
